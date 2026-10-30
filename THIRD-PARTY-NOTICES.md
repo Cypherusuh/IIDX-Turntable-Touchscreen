@@ -1,0 +1,183 @@
+# Third-party notices
+
+This file records third-party components identified in the MouseDroid IIDX
+Windows release candidate. It is not a substitute for checking each component's
+license against the exact binaries included in a release. Include this file and
+the applicable upstream license texts with any binary distribution.
+
+MouseDroid's own license is in [LICENSE](LICENSE). The repository checkout and
+the previously audited release candidate are not identical: in particular, the
+IIDX bridge is not currently present in this checkout. Versions below refer to
+the audited release candidate where stated.
+
+## Components
+
+| Component | Version identified | License / notice |
+|---|---:|---|
+| MouseDroid | Fork source | MIT; see [LICENSE](LICENSE). |
+| Android Debug Bridge (ADB) | Platform-Tools 34.0.4-10411341 | Google-signed binary. Redistribution terms for this exact prebuilt artifact have not been independently established; confirm its applicable license and required notices before publishing a package that includes it. See [Android SDK terms](https://developer.android.com/studio/terms) and [Platform-Tools](https://developer.android.com/tools/releases/platform-tools). |
+| HIDMaestro | 2.0.3 | MIT. See the [upstream license](https://github.com/hifihedgehog/HIDMaestro/blob/main/LICENSE); include that license verbatim when redistributing HIDMaestro. |
+| usbip-win2 | 0.9.8.1 | BSD 2-Clause. HIDMaestro's upstream notice says this signed driver payload is embedded for composite USB personas. |
+| DsHidMini | Source material used by HIDMaestro | BSD 3-Clause. HIDMaestro's upstream notice describes the use of its DualShock 3 descriptor and report behavior. |
+| Standalone Asio | 1.38.2 | Copyright (c) 2003-2026 Christopher M. Kohlhoff; Boost Software License 1.0. |
+| wxWidgets | 3.2.9 in the audited build | wxWindows Library Licence 3.1, including its binary-linking exception. |
+| .NET runtime | 10.0.13, win-x64 in the audited bridge publish | Self-contained bridge payload. Include Microsoft's applicable runtime and third-party notices with the publish output. The audited candidate did not include a separate `ThirdPartyNotices.txt`; this must be resolved before redistributing that payload. |
+| Microsoft.Windows.SDK.NET | 10.0.26100.55 in the audited bridge publish | Microsoft package; include the license and notices applicable to the exact package version. |
+| WinRT.Runtime | 2.2.0.48161 in the audited bridge publish | Include the license and notices applicable to the exact package version. |
+| Microsoft Visual C++ runtime | 14.51.36247 in the audited package | App-local runtime DLLs; redistribution is subject to Microsoft's applicable terms. |
+
+The ADB, .NET, Windows SDK, WinRT, and Visual C++ entries above are
+attributions, not a determination that every redistributable condition has been
+met. Confirm those terms and include any required notices in the final release.
+
+## HIDMaestro - MIT License
+
+Copyright (c) 2026 HIDMaestro Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The upstream `LICENSE` file also contains an introductory acknowledgment.
+Include the complete upstream license file when redistributing HIDMaestro.
+
+## Boost Software License - Version 1.0
+
+Permission is hereby granted, free of charge, to any person or organization
+obtaining a copy of the software and accompanying documentation covered by this
+license (the "Software") to use, reproduce, display, distribute, execute, and
+transmit the Software, and to prepare derivative works of the Software, and to
+permit third-parties to whom the Software is furnished to do so, all subject to
+the following:
+
+The copyright notices in the Software and this entire statement, including the
+above license grant, this restriction and the following disclaimer, must be
+included in all copies of the Software, in whole or in part, and all derivative
+works of the Software, unless such copies or derivative works are solely in the
+form of machine-executable object code generated by a source language
+processor.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL
+THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY
+DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+## wxWindows Library Licence, Version 3.1
+
+Copyright (c) 1998-2005 Julian Smart, Robert Roebling et al
+
+Everyone is permitted to copy and distribute verbatim copies
+of this licence document, but changing it is not allowed.
+
+                       WXWINDOWS LIBRARY LICENCE
+     TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Library General Public Licence as published by
+the Free Software Foundation; either version 2 of the Licence, or (at
+your option) any later version.
+
+This library is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library
+General Public Licence for more details.
+
+You should have received a copy of the GNU Library General Public Licence
+along with this software, usually in a file named COPYING.LIB.  If not,
+write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA 02110-1301 USA.
+
+EXCEPTION NOTICE
+
+1. As a special exception, the copyright holders of this library give
+permission for additional uses of the text contained in this release of
+the library as licenced under the wxWindows Library Licence, applying
+either version 3.1 of the Licence, or (at your option) any later version of
+the Licence as published by the copyright holders of version
+3.1 of the Licence document.
+
+2. The exception is that you may use, copy, link, modify and distribute
+under your own terms, binary object code versions of works based
+on the Library.
+
+3. If you copy code from files distributed under the terms of the GNU
+General Public Licence or the GNU Library General Public Licence into a
+copy of this library, as this licence permits, the exception does not
+apply to the code that you add in this way.  To avoid misleading anyone as
+to the status of such modified files, you must delete this exception
+notice from such code and/or adjust the licensing conditions notice
+accordingly.
+
+4. If you write modifications of your own for this library, it is your
+choice whether to permit this exception to apply to your modifications.
+If you do not wish that, you must delete the exception notice from such
+code and/or adjust the licensing conditions notice accordingly.
+
+## usbip-win2 - BSD 2-Clause License
+
+Copyright (c) 2021-2026, Vadym Hrynchyshyn
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+## DsHidMini - BSD 3-Clause License
+
+Copyright (c) 2020-2025, Benjamin Höglinger-Stelzer
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+3. Neither the name of the copyright holder nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

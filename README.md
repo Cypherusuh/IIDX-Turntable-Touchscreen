@@ -1,3 +1,19 @@
+## IIDX Turntable Touchscreen
+
+This is a community fork of [MouseDroid](https://github.com/darusc/mousedroid), intended to provide a Windows release for using Android touchscreen gestures as Beatmania IIDX turntable input. The Android app and its packet protocol are intended to remain unchanged; SpiceCFG controls which movement axis the game maps to the turntable.
+
+### Windows release
+
+When available, download the versioned Windows package from this repository's [Releases](https://github.com/Cypherusuh/IIDX-Turntable-Touchscreen/releases) page. The IIDX package requires **64-bit Windows 11, build 26100 or later**. First launch requires administrator approval so HIDMaestro can install its user-mode device components. Connect an Android device over USB, enable USB debugging, and authorize the computer.
+
+Keep the extracted release files together. The release includes ADB and a self-contained HIDMaestro bridge; no Android SDK, .NET SDK, or Visual Studio installation is intended to be required. Read the release notes and the included [third-party notices](THIRD-PARTY-NOTICES.md) before distributing or using a package.
+
+**Source status:** this checkout currently contains the upstream MouseDroid server source. The IIDX-specific momentum controller, Windows UI, and HIDMaestro bridge changes are not yet integrated into this repository, so building this checkout does not produce the IIDX-enabled Windows application.
+
+The original MouseDroid project guide is retained below.
+
+---
+
 <h1 align="center">
   <sub>
     <img src="imgs/logo.png" width="150">
