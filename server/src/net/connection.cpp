@@ -1,6 +1,39 @@
 #include "net/connection.h"
 
 #include "logger.h"
+#include "input/inputmanager.hpp"
+
+namespace
+{
+	size_t CompleteInputLength(const std::vector<char>& bytes)
+	{
+		size_t index = 0;
+		while (index < bytes.size())
+		{
+			const unsigned char command = static_cast<unsigned char>(bytes[index]);
+			size_t length = 1;
+			switch (command)
+			{
+			case InputManager::MOVE:
+			case InputManager::KEYPRESS:
+				length = 3;
+				break;
+			case InputManager::SCROLL:
+			case InputManager::SCROLL_H:
+			case InputManager::ZOOM:
+			case InputManager::MEDIA:
+				length = 2;
+				break;
+			default:
+				break;
+			}
+			if (bytes.size() - index < length)
+				break;
+			index += length;
+		}
+		return index;
+	}
+}
 
 Connection::Connection(const INPUT_MANAGER& inputmanager, tcp::socket socket, std::string& deviceDetails, OnDisconnectedListener onDisconnectedListener)
 	: inputmanager(inputmanager),
@@ -36,7 +69,13 @@ void Connection::Read()
 	socket.async_read_some(asio::buffer(byteBuffer, MAX_BUFFER_SIZE), [this](asio::error_code ec, size_t bytes) {
 		if (!ec)
 		{
-			inputmanager.execute(byteBuffer, bytes);
+			pendingInput.insert(pendingInput.end(), byteBuffer, byteBuffer + bytes);
+			const size_t completeLength = CompleteInputLength(pendingInput);
+			if (completeLength > 0)
+			{
+				inputmanager.execute(pendingInput.data(), completeLength, "TCP");
+				pendingInput.erase(pendingInput.begin(), pendingInput.begin() + completeLength);
+			}
 			Read();
 		}
 		else

@@ -32,7 +32,7 @@ Server::HostInfo Server::GetHostInfo()
 	udp::resolver resolver(context);
 	udp::socket socket(context);
 
-	socket.connect(udp::endpoint(asio::ip::address::from_string("8.8.8.8"), 80));
+	socket.connect(udp::endpoint(asio::ip::make_address("8.8.8.8"), 80));
 
 	// The IPv4 address needed is the address of the local endpoint assigned to the socket
 	// (the network adapter actual traffic is routed trough)
@@ -124,7 +124,7 @@ void Server::StartReceive()
 	udpsocket.async_receive_from(asio::buffer(byteBuffer, Connection::MAX_BUFFER_SIZE), remote_endpoint, [&](const std::error_code& ec, size_t bytesReceived) {
 		if (!ec)
 		{
-			inputmanager.execute(byteBuffer, bytesReceived);
+			inputmanager.execute(byteBuffer, bytesReceived, "UDP");
 
 			// Mechanism to synchronize the server with the client
 			// otherwise client might send the next segment of the 

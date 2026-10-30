@@ -10,9 +10,19 @@
 #endif
 
 #include "logger.h"
+#include "TurntableDiagnostics.hpp"
 
 namespace InputManager
 {
+    struct TurntableSettings
+    {
+        double acceleration = 1.0;
+        int maximumVelocityPercent = 100;
+        int coastDurationMs = 1000;
+        bool reverseCancellation = true;
+        double sensitivity = 1.0;
+    };
+
     struct Command 
     {
         char type;
@@ -40,49 +50,131 @@ namespace InputManager
     class Base
     {
         public:
-            void execute(const char* bytes, size_t size) const
+            void execute(const char* bytes, size_t size, const char* transport = "unknown") const
             {
-                switch(bytes[0])
+                if (bytes == nullptr || size == 0)
+                    return;
+
+                size_t index = 0;
+                while (index < size)
                 {
+                    const unsigned char command = static_cast<unsigned char>(bytes[index]);
+                    switch(command)
+                    {
                     case InputManager::MOVE:
-                        move(-(int)bytes[1], -(int)bytes[2]);
+                        if (index + 2 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=MOVE remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        {
+                            const int dx = -static_cast<int>(static_cast<signed char>(bytes[index + 1]));
+                            const int dy = -static_cast<int>(static_cast<signed char>(bytes[index + 2]));
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET",
+                                dx == 0 && dy == 0 ? "MOVE-zero" : "MOVE-nonzero",
+                                std::string("transport=") + transport +
+                                    " decoded_dx=" + std::to_string(dx) +
+                                    " decoded_dy=" + std::to_string(dy));
+                            move(dx, dy);
+                        }
+                        index += 3;
                         break;
                     
                     case InputManager::LCLICK:
                         click();
+                        ++index;
                         break;
 
                     case InputManager::RCLICK:
                         right_click();
+                        ++index;
                         break;
 
                     case InputManager::SCROLL:
-                        scroll(bytes[1]);
+                        if (index + 1 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=SCROLL remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        scroll(bytes[index + 1]);
+                        index += 2;
                         break;
 
                     case InputManager::SCROLL_H:
-                        scroll_h(bytes[1]);
+                        if (index + 1 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=SCROLL_H remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        scroll_h(bytes[index + 1]);
+                        index += 2;
                         break;
 
                     case InputManager::DOWN:
                         down();
+                        ++index;
                         break;
 
                     case InputManager::UP:
                         up();
+                        ++index;
                         break;
 
                     case InputManager::KEYPRESS:
-                        send_key(bytes[1], bytes[2]);
+                        if (index + 2 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=KEYPRESS remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        send_key(
+                            static_cast<uint8_t>(bytes[index + 1]),
+                            static_cast<uint8_t>(bytes[index + 2]));
+                        index += 3;
                         break;
 
                     case InputManager::MEDIA:
-                        media(bytes[1]);
+                        if (index + 1 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=MEDIA remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        media(static_cast<uint8_t>(bytes[index + 1]));
+                        index += 2;
                         break;
 
                     case InputManager::ZOOM:
-                        zoom(bytes[1]);
+                        if (index + 1 >= size)
+                        {
+                            TurntableDiagnostics::Record(
+                                "TURN-PACKET", "incomplete-command",
+                                std::string("transport=") + transport + " type=ZOOM remaining=" +
+                                    std::to_string(size - index));
+                            return;
+                        }
+                        zoom(bytes[index + 1]);
+                        index += 2;
                         break;
+
+                    default:
+                        ++index;
+                        break;
+                    }
                 }
             }
             

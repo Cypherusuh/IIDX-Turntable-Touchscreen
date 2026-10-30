@@ -30,7 +30,7 @@ namespace adb
 	bool start(int port)
 	{
 		std::string path = dir();
-		std::string command = path + "\\adb.exe " + "reverse tcp:" + std::to_string(port) + " tcp:" + std::to_string(port);
+		std::string command = path + "\\adb.exe -d reverse tcp:" + std::to_string(port) + " tcp:" + std::to_string(port);
 
 		if (system(command.c_str()) == 0)
 		{
@@ -57,7 +57,7 @@ namespace adb
 		// Sometimes with kill-server it takes too long for the app to stop
 		// becoming not responding
 		// std::string command = path + "\\adb\\adb.exe " + "reverse --remove tcp:" + std::to_string(port);
-		std::string command = path + "\\adb.exe " + "reverse --remove tcp:" + std::to_string(port) + " & " + path + "\\adb\\adb.exe kill-server";
+		std::string command = path + "\\adb.exe -d reverse --remove tcp:" + std::to_string(port) + " & " + path + "\\adb\\adb.exe kill-server";
 
 		if (system(command.c_str()) == 0)
 		{

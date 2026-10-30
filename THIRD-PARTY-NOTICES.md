@@ -5,10 +5,10 @@ Windows release candidate. It is not a substitute for checking each component's
 license against the exact binaries included in a release. Include this file and
 the applicable upstream license texts with any binary distribution.
 
-MouseDroid's own license is in [LICENSE](LICENSE). The repository checkout and
-the previously audited release candidate are not identical: in particular, the
-IIDX bridge is not currently present in this checkout. Versions below refer to
-the audited release candidate where stated.
+MouseDroid's own license is in [LICENSE](LICENSE). This repository includes the
+HIDMaestro bridge source but does not vendor its SDK or published runtime.
+Versions below refer to the previously audited Windows release candidate where
+stated.
 
 ## Components
 

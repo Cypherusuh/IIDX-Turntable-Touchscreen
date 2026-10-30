@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <HidMaestroSdkRoot Condition="'$(HidMaestroSdkRoot)' == ''">$(MSBuildThisFileDirectory)..\HIDMaestro-v2.0.3</HidMaestroSdkRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HIDMaestro.Core">
+      <HintPath>$(HidMaestroSdkRoot)\HIDMaestro.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.SDK.NET">
+      <HintPath>$(HidMaestroSdkRoot)\HIDMaestroTest\Microsoft.Windows.SDK.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRT.Runtime">
+      <HintPath>$(HidMaestroSdkRoot)\HIDMaestroTest\WinRT.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <functional>
+#include <vector>
 #include <asio.hpp>
 
 #include "input/input.h"
@@ -32,6 +33,7 @@ private:
 	tcp::socket socket;
 	const INPUT_MANAGER& inputmanager;
 	char* byteBuffer;
+	std::vector<char> pendingInput;
 
 	bool active;
 	DeviceInfo deviceInfo;

@@ -8,7 +8,29 @@ When available, download the versioned Windows package from this repository's [R
 
 Keep the extracted release files together. The release includes ADB and a self-contained HIDMaestro bridge; no Android SDK, .NET SDK, or Visual Studio installation is intended to be required. Read the release notes and the included [third-party notices](THIRD-PARTY-NOTICES.md) before distributing or using a package.
 
-**Source status:** this checkout currently contains the upstream MouseDroid server source. The IIDX-specific momentum controller, Windows UI, and HIDMaestro bridge changes are not yet integrated into this repository, so building this checkout does not produce the IIDX-enabled Windows application.
+The fork's Windows server includes independent X/Y momentum, the Turntable settings simulator, and automatic HIDMaestro bridge management. Android source and its packet protocol are unchanged. This source repository does not include build dependencies or a prebuilt Windows release; those are provided separately.
+
+### Building the IIDX Windows version
+
+The Windows server uses CMake, Visual Studio C++ tools, wxWidgets, and Asio. The bridge targets .NET 10 and requires the HIDMaestro 2.0.3 SDK assemblies, which are not vendored here. Set up the dependencies described in [`server/README.md`](server/README.md), then build the server from the repository root:
+
+```powershell
+cmake -S server -B server/build -A x64 `
+  -DASIO_PATH="C:\path\to\asio" `
+  -DCMAKE_PREFIX_PATH="C:\path\to\wxWidgets"
+cmake --build server/build --config Release
+```
+
+Publish the bridge with the separately obtained HIDMaestro SDK folder:
+
+```powershell
+dotnet publish MouseDroidHIDBridge/MouseDroidHIDBridge.csproj `
+  --configuration Release `
+  --output Release/HIDMaestroBridge `
+  -p:HidMaestroSdkRoot="C:\path\to\HIDMaestro-v2.0.3"
+```
+
+Place the server executable, published `HIDMaestroBridge` folder, ADB files, and `config.ini` together in the release directory. The runtime package requires 64-bit Windows 11 build 26100 or later and administrator approval for HIDMaestro driver setup.
 
 The original MouseDroid project guide is retained below.
 

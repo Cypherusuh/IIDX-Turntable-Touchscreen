@@ -25,6 +25,12 @@ class SettingsManager
         void SetScrollSensitivity(int value);
         int GetMoveSensitivity();
         int GetScrollSensitivity();
+        void SetTurntableAcceleration(double value);
+        void SetTurntableMaximumVelocityPercent(int value);
+        void SetTurntableCoastDurationMs(int value);
+        void SetTurntableReverseCancellation(bool enabled);
+        void SetTurntableSensitivity(double value);
+        InputManager::TurntableSettings GetTurntableSettings() const;
 
         void ADBOn();
         void ADBOff();
@@ -39,6 +45,7 @@ class SettingsManager
         bool bMinToTaskbar;
 
         bool bAdbStarted;
+        InputManager::TurntableSettings turntableSettings;
 
         std::string GetFilePath();
         void LoadConfigs();
